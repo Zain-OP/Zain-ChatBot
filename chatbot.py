@@ -23,9 +23,9 @@ bot = Client(
     bot_token = Config.BOT_TOKEN
 )
 
-lol = bot.get_me()
-BOT_NAME = lol.first_name
-BOT_USERNAME = lol.username
+
+BOT_NAME = Config.BOT_NAME
+BOT_USERNAME = Config.BOT_USERNAME
 MONGO_URL = Config.MONGO_URL
 
 async def is_admins(chat_id: int):
