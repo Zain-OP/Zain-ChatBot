@@ -211,16 +211,16 @@ async def chatbot(client, message):
      & ~filters.private 
      & ~filters.bot, 
  ) 
- async def agoraai(client: Client, message: Message): 
+ async def zainai(client: Client, message: Message): 
   
     chatdb = MongoClient(MONGO_URL) 
     chatai = chatdb["Word"]["WordDb"]    
   
     if not message.reply_to_message: 
-        agoradb = MongoClient(MONGO_URL) 
-        agora = agoradb["AgoraDb"]["Agora"]  
-        is_agora = agora.find_one({"chat_id": message.chat.id}) 
-        if not is_agora: 
+        zaindb = MongoClient(MONGO_URL) 
+        zain = zaindb["ZainDb"]["Zain"]  
+        is_zain = zain.find_one({"chat_id": message.chat.id}) 
+        if not is_zain: 
             await bot.send_chat_action(message.chat.id, "typing") 
             K = []   
             is_chat = chatai.find({"word": message.text})   
@@ -237,13 +237,13 @@ async def chatbot(client, message):
                     await message.reply_text(f"{hey}") 
      
     if message.reply_to_message:   
-        agoradb = MongoClient(MONGO_URL) 
-        agora = agoradb["AgoraDb"]["Agora"]  
-        is_agora = agora.find_one({"chat_id": message.chat.id})     
+        zaindb = MongoClient(MONGO_URL) 
+        zain = zaindb["ZainDb"]["Zain"]  
+        is_zain = zain.find_one({"chat_id": message.chat.id})     
         getme = await bot.get_me() 
         bot_id = getme.id                              
         if message.reply_to_message.from_user.id == bot_id:  
-            if not is_agora:                    
+            if not is_zain:                    
                 await bot.send_chat_action(message.chat.id, "typing") 
                 K = []   
                 is_chat = chatai.find({"word": message.text}) 
@@ -277,16 +277,16 @@ async def chatbot(client, message):
      & ~filters.private 
      & ~filters.bot, 
  ) 
- async def agorastickerai(client: Client, message: Message): 
+ async def zainstickerai(client: Client, message: Message): 
   
     chatdb = MongoClient(MONGO_URL) 
     chatai = chatdb["Word"]["WordDb"]    
   
     if not message.reply_to_message: 
-        agoradb = MongoClient(MONGO_URL) 
-        agora = agoradb["AgoraDb"]["Agora"]  
-        is_agora = agora.find_one({"chat_id": message.chat.id}) 
-        if not is_agora: 
+        zaindb = MongoClient(MONGO_URL) 
+        zain = zaindb["ZainDb"]["Zain"]  
+        is_zain = zain.find_one({"chat_id": message.chat.id}) 
+        if not is_zain: 
             await bot.send_chat_action(message.chat.id, "typing") 
             K = []   
             is_chat = chatai.find({"word": message.sticker.file_unique_id})       
@@ -303,13 +303,13 @@ async def chatbot(client, message):
                     await message.reply_sticker(f"{hey}") 
      
     if message.reply_to_message: 
-        agoradb = MongoClient(MONGO_URL) 
-        agora = agoradb["AgoraDb"]["Agora"]  
-        is_agora = agora.find_one({"chat_id": message.chat.id}) 
+        zaindb = MongoClient(MONGO_URL) 
+        zain = zaindb["ZainDb"]["Zain"]  
+        is_zain = zain.find_one({"chat_id": message.chat.id}) 
         getme = await bot.get_me() 
         bot_id = getme.id 
         if message.reply_to_message.from_user.id == bot_id:  
-            if not is_agora:                     
+            if not is_zain:                     
                 await bot.send_chat_action(message.chat.id, "typing") 
                 K = []   
                 is_chat = chatai.find({"word": message.text}) 
