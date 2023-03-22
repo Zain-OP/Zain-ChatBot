@@ -25,8 +25,9 @@ bot = Client(
     bot_token = Config.BOT_TOKEN
 )
 
-BOT_NAME = Config.BOT_NAME
-BOT_USERNAME = Config.BOT_USERNAME
+x = bot.get_me()
+BOT_NAME = x.first_name
+BOT_USERNAME = x.username
 MONGO_URL = Config.MONGO_URL
   
   
@@ -62,7 +63,7 @@ EMOJIOS = [
 
  DEV_OP = [
     [
-        InlineKeyboardButton(text="🥀 Developer 🥀", url=f"tg://settings"),
+        InlineKeyboardButton(text="🥀 Developer 🥀", url=f"https://t.me/Officialzain_05"),
         InlineKeyboardButton(text="✨ Support ✨", url=f"tg://settings"),
     ],
     [
@@ -177,8 +178,8 @@ async def chatbotofd(client, message):
     filters.command(["chatbot on", f"chatbot@{BOT_USERNAME} on"] ,prefixes=["/", ".", "?", "-"])
     & ~filters.private)
 async def chatboton(client, message):
-    zainddb = MongoClient(MONGO_URL)    
-    legend = zainddb["LegendDb"]["Legend"]     
+    zaindb = MongoClient(MONGO_URL)    
+    zain = zaindb["ZainDb"]["Zain"]     
     if message.from_user:
         user = message.from_user.id
         chat_id = message.chat.id
@@ -188,7 +189,7 @@ async def chatboton(client, message):
             return await message.reply_text(
                 "You are not admin"
             )
-    is_zain = legend.find_one({"chat_id": message.chat.id})
+    is_zain = zain.find_one({"chat_id": message.chat.id})
     if not is_zain:           
         await message.reply_text(f"Chatbot Already Enabled")
     if is_zain:
@@ -421,5 +422,9 @@ async def chatbot(client, message):
             if not Yo == "text": 
                 await message.reply_sticker(f"{hey}") 
   
- print(f"{BOT_NAME} ɪs ᴀʟɪᴠᴇ!")       
+ print(f"""➖➖➖➖➖➖➖
+{BOT_NAME} is Deployed Successfully
+Your Bot Username :- @{BOT_USERNAME}
+Owner :- @Officialzain_05
+""")       
  bot.run()
