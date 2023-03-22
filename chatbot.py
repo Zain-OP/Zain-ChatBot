@@ -39,27 +39,6 @@ async def is_admins(chat_id: int):
         )
     ]
 
-
-EMOJIOS = [ 
-      "💣",
-      "💥",
-      "🪄",
-      "🧨",
-      "⚡",
-      "🤡",
-      "👻",
-      "🎃",
-      "🎩",
-      "🕊",
-] 
-
-START = f"""
-**๏ Hey, I am [{Config.BOT_NAME}]({Config.START_IMG})**
-**➻ A ᴄʜᴀᴛʙᴏᴛ.**
-**──────────────────**
-**➻ ᴜsᴀɢᴇ /chatbot [on/off]**
-**๏ ᴛᴏ ɢᴇᴛ ʜᴇʟᴘ ᴜsᴇ /help**
-"""
 DEV_OP = [
     [
         InlineKeyboardButton(text="🥀 ᴅᴇᴠᴇʟᴏᴘᴇʀ 🥀", url=f"https://t.me/aboutagora"),
@@ -202,25 +181,26 @@ async def chatboton(client, message):
 async def chatbot(client, message):
     await message.reply_text(f"**ᴜsᴀɢᴇ:**\n/**chatbot [on/off]**\n**ᴄʜᴀᴛ-ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅ(s) ᴡᴏʀᴋ ɪɴ ɢʀᴏᴜᴘ ᴏɴʟʏ!**")
 
- 
-@bot.on_message(
- (
-        filters.text
-        | filters.sticker
-    )
-    & ~filters.private
-    & ~filters.bot,
-)
-async def zainai(client: Client, message: Message): 
+
+
+@bot.on_message( 
+  ( 
+         filters.text 
+         | filters.sticker 
+     ) 
+     & ~filters.private 
+     & ~filters.bot, 
+ ) 
+ async def agoraai(client: Client, message: Message): 
   
     chatdb = MongoClient(MONGO_URL) 
     chatai = chatdb["Word"]["WordDb"]    
   
     if not message.reply_to_message: 
-        zaindb = MongoClient(MONGO_URL) 
-        zain = zaindb["ZainDb"]["Zain"]  
-        is_zain = zain.find_one({"chat_id": message.chat.id}) 
-        if not is_zain: 
+        agoradb = MongoClient(MONGO_URL) 
+        agora = agoradb["AgoraDb"]["Agora"]  
+        is_agora = agora.find_one({"chat_id": message.chat.id}) 
+        if not is_agora: 
             await bot.send_chat_action(message.chat.id, "typing") 
             K = []   
             is_chat = chatai.find({"word": message.text})   
@@ -237,13 +217,13 @@ async def zainai(client: Client, message: Message):
                     await message.reply_text(f"{hey}") 
      
     if message.reply_to_message:   
-        zaindb = MongoClient(MONGO_URL) 
-        zain = zaindb["ZainDb"]["Zain"]  
-        is_zain = zain.find_one({"chat_id": message.chat.id})     
+        agoradb = MongoClient(MONGO_URL) 
+        agora = agoradb["AgoraDb"]["Agora"]  
+        is_agora = agora.find_one({"chat_id": message.chat.id})     
         getme = await bot.get_me() 
         bot_id = getme.id                              
         if message.reply_to_message.from_user.id == bot_id:  
-            if not is_zain:                    
+            if not is_agora:                    
                 await bot.send_chat_action(message.chat.id, "typing") 
                 K = []   
                 is_chat = chatai.find({"word": message.text}) 
@@ -267,26 +247,26 @@ async def zainai(client: Client, message: Message):
                 is_chat = chatai.find_one({"word": message.reply_to_message.text, "text": message.text})                  
                 if not is_chat: 
                     chatai.insert_one({"word": message.reply_to_message.text, "text": message.text, "check": "none"})     
-
                  
-@bot.on_message(
- (
-        filters.sticker
-        | filters.text
-    )
-    & ~filters.private
-    & ~filters.bot,
-)
-async def zainstickerai(client: Client, message: Message): 
+  
+ @bot.on_message( 
+  ( 
+         filters.sticker 
+         | filters.text 
+     ) 
+     & ~filters.private 
+     & ~filters.bot, 
+ ) 
+ async def agorastickerai(client: Client, message: Message): 
   
     chatdb = MongoClient(MONGO_URL) 
     chatai = chatdb["Word"]["WordDb"]    
   
     if not message.reply_to_message: 
-        zaindb = MongoClient(MONGO_URL) 
-        zain = zaindb["ZainDb"]["Zain"]  
-        is_zain = zain.find_one({"chat_id": message.chat.id}) 
-        if not is_zain: 
+        agoradb = MongoClient(MONGO_URL) 
+        agora = agoradb["AgoraDb"]["Agora"]  
+        is_agora = agora.find_one({"chat_id": message.chat.id}) 
+        if not is_agora: 
             await bot.send_chat_action(message.chat.id, "typing") 
             K = []   
             is_chat = chatai.find({"word": message.sticker.file_unique_id})       
@@ -303,13 +283,13 @@ async def zainstickerai(client: Client, message: Message):
                     await message.reply_sticker(f"{hey}") 
      
     if message.reply_to_message: 
-        zaindb = MongoClient(MONGO_URL) 
-        zain = zaindb["ZainDb"]["Zain"]  
-        is_zain = zain.find_one({"chat_id": message.chat.id}) 
+        agoradb = MongoClient(MONGO_URL) 
+        agora = agoradb["AgoraDb"]["Agora"]  
+        is_agora = agora.find_one({"chat_id": message.chat.id}) 
         getme = await bot.get_me() 
         bot_id = getme.id 
         if message.reply_to_message.from_user.id == bot_id:  
-            if not is_zain:                     
+            if not is_agora:                     
                 await bot.send_chat_action(message.chat.id, "typing") 
                 K = []   
                 is_chat = chatai.find({"word": message.text}) 
@@ -335,16 +315,17 @@ async def zainstickerai(client: Client, message: Message):
                     chatai.insert_one({"word": message.reply_to_message.sticker.file_unique_id, "text": message.sticker.file_id, "check": "none"})     
                  
   
-@bot.on_message(
-    (
-        filters.text
-        | filters.sticker
-    )
-    & filters.private
-    & ~filters.bot,
-)
-async def vickprivate(client: Client, message: Message):
-
+  
+ @bot.on_message( 
+     ( 
+         filters.text 
+         | filters.sticker 
+     ) 
+     & filters.private 
+     & ~filters.bot, 
+ ) 
+ async def vickprivate(client: Client, message: Message): 
+  
     chatdb = MongoClient(MONGO_URL) 
     chatai = chatdb["Word"]["WordDb"] 
     if not message.reply_to_message:  
@@ -378,16 +359,16 @@ async def vickprivate(client: Client, message: Message):
                 await message.reply_text(f"{hey}") 
          
   
-@bot.on_message(
- (
-        filters.sticker
-        | filters.text
-    )
-    & filters.private
-    & ~filters.bot,
-)
-async def vickprivatesticker(client: Client, message: Message):
-
+ @bot.on_message( 
+  ( 
+         filters.sticker 
+         | filters.text 
+     ) 
+     & filters.private 
+     & ~filters.bot, 
+ ) 
+ async def vickprivatesticker(client: Client, message: Message): 
+  
     chatdb = MongoClient(MONGO_URL) 
     chatai = chatdb["Word"]["WordDb"]  
     if not message.reply_to_message: 
@@ -418,11 +399,12 @@ async def vickprivatesticker(client: Client, message: Message):
             if Yo == "text": 
                 await message.reply_text(f"{hey}") 
             if not Yo == "text": 
-                await message.reply_sticker(f"{hey}") 
-  
+                await message.reply_sticker(f"{hey}")
+
+
 print(f"""➖➖➖➖➖➖➖
-{BOT_NAME} is Deployed Successfully
+{BOT_NAME} is Deployed Successfully
 Your Bot Username :- @{BOT_USERNAME}
 Owner :- @Officialzain_05
-""")       
+""")       
 bot.run()
