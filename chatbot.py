@@ -9,8 +9,6 @@ import asyncio
 import time 
 from datetime import datetime 
 
-
-
 ENV = bool(os.environ.get("ENV", False))
 
 if ENV:
@@ -24,9 +22,10 @@ bot = Client(
     api_hash = Config.API_HASH ,
     bot_token = Config.BOT_TOKEN
 )
-x = bot.get_me()
-BOT_NAME = x.first_name
-BOT_USERNAME = x.username
+
+lol = bot.get_me()
+BOT_NAME = lol.first_name
+BOT_USERNAME = lol.username
 MONGO_URL = Config.MONGO_URL
 
 async def is_admins(chat_id: int):
@@ -421,5 +420,3 @@ async def vickprivatesticker(client: Client, message: Message):
 
 print(f"{BOT_NAME} ɪs ᴀʟɪᴠᴇ!")      
 bot.run()
-
-
