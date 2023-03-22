@@ -1,1 +1,1 @@
-worker: python3 chatbot.py
+sweetie: python3 chatbot.py
