@@ -1,14 +1,13 @@
-
-from pyrogram.types import * 
-from pymongo import MongoClient 
 from pyrogram import Client, filters
-import requests 
-import random 
-import os 
-import re 
-import asyncio 
-import time 
-from datetime import datetime
+from pyrogram.types import *
+from pymongo import MongoClient
+import requests
+import random
+import os
+import re
+import asyncio
+import time
+from datetime import datetime
 
 
 ENV = bool(os.environ.get("ENV", False))
@@ -32,13 +31,13 @@ BOT_USERNAME = x.username
 MONGO_URL = Config.MONGO_URL
   
   
- async def is_admins(chat_id: int): 
-     return [ 
-         member.user.id 
-         async for member in bot.iter_chat_members( 
-             chat_id, filter="administrators" 
-         ) 
-     ] 
+async def is_admins(chat_id: int):
+    return [
+        member.user.id
+        async for member in bot.iter_chat_members(
+            chat_id, filter="administrators"
+        )
+    ]
 
 
 EMOJIOS = [ 
@@ -54,31 +53,30 @@ EMOJIOS = [
       "🕊",
 ] 
 
- START = f"""
+START = f"""
 **๏ Hey, I am [{Config.BOT_NAME}]({Config.START_IMG})**
 **➻ A ᴄʜᴀᴛʙᴏᴛ.**
 **──────────────────**
 **➻ ᴜsᴀɢᴇ /chatbot [on/off]**
 **๏ ᴛᴏ ɢᴇᴛ ʜᴇʟᴘ ᴜsᴇ /help**
 """
-
- DEV_OP = [
+DEV_OP = [
     [
-        InlineKeyboardButton(text="🥀 Developer 🥀", url=f"https://t.me/Officialzain_05"),
-        InlineKeyboardButton(text="✨ Support ✨", url=f"tg://settings"),
+        InlineKeyboardButton(text="🥀 ᴅᴇᴠᴇʟᴏᴘᴇʀ 🥀", url=f"https://t.me/aboutagora"),
+        InlineKeyboardButton(text="✨ ꜱᴜᴘᴘᴏʀᴛ ✨", url=f"https://t.me/teamagora"),
     ],
     [
         InlineKeyboardButton(
-            text="🧸 Add me in your group 🧸",
-            url=f"https://t.me/{Config.BOT_USERNAME}?startgroup=true",
+            text="🧸 ᴀᴅᴅ ᴍᴇ ʙᴀʙʏ 🧸",
+            url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
         ),
     ],
     [
-        InlineKeyboardButton(text="🚀 Helps & Cmds 🚀", callback_data="HELP"),
+        InlineKeyboardButton(text="🚀 ʜᴇʟᴘ & ᴄᴍᴅs 🚀", callback_data="HELP"),
     ],
     [
-        InlineKeyboardButton(text="❄️ Source Code ❄️", url=f"https://github.com/ZAIN-OP/ZAIN-CHATBOT"),
-        InlineKeyboardButton(text="☁️ Updates ☁️", url=f"tg://settings"),
+        InlineKeyboardButton(text="❄️ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ❄️", url=f"https://t.me/teamagora"),
+        InlineKeyboardButton(text="☁️ ᴜᴘᴅᴀᴛᴇs ☁️", url=f"https://t.me/{UPDATE_CHNL}"),
     ],
 ]
 
@@ -205,15 +203,15 @@ async def chatbot(client, message):
     await message.reply_text(f"**ᴜsᴀɢᴇ:**\n/**chatbot [on/off]**\n**ᴄʜᴀᴛ-ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅ(s) ᴡᴏʀᴋ ɪɴ ɢʀᴏᴜᴘ ᴏɴʟʏ!**")
 
  
- @bot.on_message( 
-  ( 
-         filters.text 
-         | filters.sticker 
-     ) 
-     & ~filters.private 
-     & ~filters.bot, 
- ) 
- async def zainai(client: Client, message: Message): 
+@bot.on_message(
+ (
+        filters.text
+        | filters.sticker
+    )
+    & ~filters.private
+    & ~filters.bot,
+)
+async def zainai(client: Client, message: Message): 
   
     chatdb = MongoClient(MONGO_URL) 
     chatai = chatdb["Word"]["WordDb"]    
@@ -269,17 +267,17 @@ async def chatbot(client, message):
                 is_chat = chatai.find_one({"word": message.reply_to_message.text, "text": message.text})                  
                 if not is_chat: 
                     chatai.insert_one({"word": message.reply_to_message.text, "text": message.text, "check": "none"})     
+
                  
-  
- @bot.on_message( 
-  ( 
-         filters.sticker 
-         | filters.text 
-     ) 
-     & ~filters.private 
-     & ~filters.bot, 
- ) 
- async def zainstickerai(client: Client, message: Message): 
+@bot.on_message(
+ (
+        filters.sticker
+        | filters.text
+    )
+    & ~filters.private
+    & ~filters.bot,
+)
+async def zainstickerai(client: Client, message: Message): 
   
     chatdb = MongoClient(MONGO_URL) 
     chatai = chatdb["Word"]["WordDb"]    
@@ -337,17 +335,16 @@ async def chatbot(client, message):
                     chatai.insert_one({"word": message.reply_to_message.sticker.file_unique_id, "text": message.sticker.file_id, "check": "none"})     
                  
   
-  
- @bot.on_message( 
-     ( 
-         filters.text 
-         | filters.sticker 
-     ) 
-     & filters.private 
-     & ~filters.bot, 
- ) 
- async def vickprivate(client: Client, message: Message): 
-  
+@bot.on_message(
+    (
+        filters.text
+        | filters.sticker
+    )
+    & filters.private
+    & ~filters.bot,
+)
+async def vickprivate(client: Client, message: Message):
+
     chatdb = MongoClient(MONGO_URL) 
     chatai = chatdb["Word"]["WordDb"] 
     if not message.reply_to_message:  
@@ -381,16 +378,16 @@ async def chatbot(client, message):
                 await message.reply_text(f"{hey}") 
          
   
- @bot.on_message( 
-  ( 
-         filters.sticker 
-         | filters.text 
-     ) 
-     & filters.private 
-     & ~filters.bot, 
- ) 
- async def vickprivatesticker(client: Client, message: Message): 
-  
+@bot.on_message(
+ (
+        filters.sticker
+        | filters.text
+    )
+    & filters.private
+    & ~filters.bot,
+)
+async def vickprivatesticker(client: Client, message: Message):
+
     chatdb = MongoClient(MONGO_URL) 
     chatai = chatdb["Word"]["WordDb"]  
     if not message.reply_to_message: 
@@ -423,9 +420,9 @@ async def chatbot(client, message):
             if not Yo == "text": 
                 await message.reply_sticker(f"{hey}") 
   
- print(f"""➖➖➖➖➖➖➖
+print(f"""➖➖➖➖➖➖➖
 {BOT_NAME} is Deployed Successfully
 Your Bot Username :- @{BOT_USERNAME}
 Owner :- @Officialzain_05
 """)       
- bot.run()
+bot.run()
