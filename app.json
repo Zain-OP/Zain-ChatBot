@@ -21,16 +21,8 @@
             "description": "mongo db url here mongodb.com",
             "required": true
         },
-        "BOT_USERNAME": {
-            "description": "telegram bot username here without @",
-            "required": true
-        },
         "OWNER_USERNAME": {
             "description": "Owner Username without @",
-            "required": true
-        },
-        "BOT_NAME": {
-            "description": "Simple Copy Bot Name. Do not use Modified Text..",
             "required": true
         },
         "STKR": {
